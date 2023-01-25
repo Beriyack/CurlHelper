@@ -1,3 +1,4 @@
 <?php
-$curl = new CurlHelper();
-$response = $curl->send('https://example.com');
+$options = [CURLOPT_FOLLOWLOCATION => true];
+$curlHelper = new CurlHelper();
+$response = $curlHelper->send('https://example.com', 'GET', [], $options);
