@@ -1,0 +1,2 @@
+# README
+class CurlHelper
