@@ -6,10 +6,11 @@ class CurlHelper {
      * @param string $url L'URL à laquelle envoyer la requête
      * @param string $method La méthode de requête (GET ou POST)
      * @param array $data Les données à envoyer avec la requête (pour les requêtes POST)
+     * @param array $options Les options cURL additionnelles
      *
      * @return array|null La réponse décodée en JSON du serveur, ou null si la réponse n'est pas au format JSON
      */
-    public function send($url, $method = 'GET', $data = []) : ?array {
+    public function send($url, $method = 'GET', $data = [], $options = []) : ?array {
         // Initialisation de cURL
         $ch = curl_init();
 
@@ -19,13 +20,18 @@ class CurlHelper {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         // Configuration de la méthode de requête
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+        // Ajout d'entêtes pour indiquer que l'on s'attend à une réponse json
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
 
         // Si la méthode est POST, on envoie les données avec la requête
         if ($method == 'POST') {
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         }
-        // Ajout d'entêtes pour indiquer que l'on s'attend à une réponse json
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        
+        // Appliquer les options additionnelles si fournies
+        if(!empty($options)){
+            curl_setopt_array($ch, $options);
+        }
 
         // Envoi de la requête
         $output = curl_exec($ch);
