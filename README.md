@@ -1,2 +1,2 @@
 # README
-class PHP CurlHelper pour la gestion de la bibliothèque cURL
+Class CurlHelper pour simplifier l'utilisation de la bibliothèque cURL en PHP.
